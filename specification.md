@@ -8,8 +8,8 @@
 
 ## 2.1 sintaxis
 
-til <name> : <type>  
-type => [bytestring | byte | word]
+`til <name> : <type>`
+`type => [bytestring | byte | word]`
 
 ## 2.2 tipos de datos
 
