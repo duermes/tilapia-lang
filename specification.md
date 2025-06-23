@@ -38,7 +38,21 @@ Ejemplo:
 ```a+b``` 
 
 ## 2.5 Control Structures
+### 2.5.1 Conditionals
 
+```
+<if-statement> := if <condition> {<stmt>*} [<optional-else>]  
+<optional-else> := else <if-statement>
+                | else {<stmt>* }
+```  
+
+### 2.5.2 Loops
+
+```while (<condition>) {<body>}```  
+
+```do {<stmt>*} while (<condition>)```  
+
+```for (<init>; <condition>; <inc>) { <body> }```  
 
 
 ## 2.4 Functions
