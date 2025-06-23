@@ -19,8 +19,8 @@
 **byte:** signed byte  
 
 ## operaciones
-```<expression> := <exp1> <valid operation> <exp2>```
-```<valid operator> := + | - | / | & | << | >> | %```
+```<expression> := <exp1> <valid operation> <exp2>```  
+```<valid operator> := + | - | / | & | << | >> | %```  
 
 `+`: suma  
 `-`: resta  
