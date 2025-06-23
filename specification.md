@@ -1,16 +1,12 @@
+# Specification
+
 ## 1.1 Introduction
 
 ## 1.2 Objectives
 
-## 2. especificacion
+# 2. Syntax
 
-## 2.1 sintaxis
-
-```variable := til <id> : <type>```.   
-
-```type := bytestring | byte | ubyte | word | uword```.   
-
-## 2.2 tipos de datos
+## 2.1 Data Types
 
 **bytestring:** string  
 **uword:** unsigned entero  
@@ -18,7 +14,14 @@
 **ubyte:** unsigned byte  
 **byte:** signed byte  
 
-## operaciones
+## 2.2 Variables
+
+```variable := til <id> : <type>```.   
+
+```type := bytestring | byte | ubyte | word | uword```.  
+
+## 2.3 Numerical Operators
+
 ```<expression> := <exp1> <valid operation> <exp2>```  
 ```<valid operator> := + | - | / | & | << | >> | %```  
 
@@ -32,7 +35,11 @@
 Ejemplo:   
 ```a+b``` 
 
-## 2.3 funciones
+## 2.5 Control Structures
+
+
+
+## 2.4 Functions
 
 ```function := fun <id> () { <body> }```
 
@@ -51,13 +58,10 @@ Roadmap for this feature (by tai):
 - no args, with ret  
 - args and ret  
 
-_Goal: `fun <id> (<args>) [-> <type>] {<body>}`_
+_Goal: `fun <id> (<args>) [-> <type>] {<body>}`_  
 
+ 
 
-## 2.4 estructura de control
+## 3. Tilapia
 
-## 2.5 funciones estandar
-
-## 2.6 variables
-
-## 3. tilapias
+Tilapia es el nombre común de casi cien especies de peces cíclidos antes conocidos como tilapinidos y ahora incluidos en los grupos taxonómicos celotilapina, coptodonina, heterotilapina, oreocromina, pelmatolapina y tilapia, de las cuales las económicamente más importantes son los coptodoninos y los oreochrominos.
