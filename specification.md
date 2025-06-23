@@ -8,11 +8,13 @@
 
 ## 2.1 Data Types
 
-**bytestring:** string  
-**uword:** unsigned entero  
-**word:** signed entero  
-**ubyte:** unsigned byte  
-**byte:** signed byte  
+```<type> := byte | ubyte | word | uword | bytestring```  
+
+**bytestring:** fat string of bytes, lenght and pointer to contigous valid byte instances
+**uword:** 64 bits unsigned integer  
+**word:** 64 bits signed integer  
+**ubyte:** 8 bits unsigned integer  
+**byte:** 8 bits signed integer 
 
 ## 2.2 Variables
 
@@ -62,6 +64,6 @@ _Goal: `fun <id> (<args>) [-> <type>] {<body>}`_
 
  
 
-## 3. Tilapia
+# 3. Tilapia
 
 Tilapia es el nombre común de casi cien especies de peces cíclidos antes conocidos como tilapinidos y ahora incluidos en los grupos taxonómicos celotilapina, coptodonina, heterotilapina, oreocromina, pelmatolapina y tilapia, de las cuales las económicamente más importantes son los coptodoninos y los oreochrominos.
