@@ -10,7 +10,7 @@
 
 ```<type> := byte | ubyte | word | uword | bytestring```  
 
-**bytestring:** fat string of bytes, lenght and pointer to contigous valid byte instances
+**bytestring:** Used to store strings. Lenght and pointer to contigous valid byte instances. Supossed to work as a vector. (Initial length: Undefined til assigned value, only changes). Inmutable except assignation  
 **uword:** 64 bits unsigned integer  
 **word:** 64 bits signed integer  
 **ubyte:** 8 bits unsigned integer  
@@ -18,14 +18,23 @@
 
 ## 2.2 Variables
 
-```variable := til <id> : <type>```.   
+```
+<var-dec> := til <id>: <type> <dec>;
 
-```type := bytestring | byte | ubyte | word | uword```.  
+<dec> := = <expr> | epsilon ; 
+type := bytestring | byte | ubyte | word | uword
+
+
+<assig> := <id> = <exp>;
+```      
+
+Example:
+``` til name : bytestring = "Hassan";```   
 
 ## 2.3 Numerical Operators
 
-```<expression> := <exp1> <valid operation> <exp2>```  
-```<valid operator> := + | - | / | & | << | >> | %```  
+```<expression> := <exp1> <valid operation> <exp2>;```  
+```<valid operator> := + | - | / | % | << | >>``  
 
 `+`: suma  
 `-`: resta  
@@ -34,40 +43,68 @@
 `>>`: right shift  
 `%`: modulo
 
-Ejemplo:   
+Example:   
 ```a+b``` 
 
 ## 2.5 Control Structures
 ### 2.5.1 Conditionals
 
 ```
-<if-statement> := if <condition> {<stmt>*} [<optional-else>]  
-<optional-else> := else <if-statement>
-                | else {<stmt>* }
+<comp-stmt> := { <stmt>* }
+<if-statement> := if <expr> <comp-stmt> <if-tail>
+<if-tail> := else <comp-stmt> 
+            | else <if-statement> 
+            | epsilon
 ```  
+
+Examples:
+```
+if a>5 { a+b; } 
+if a>5 { a+b; } else { a = 0; }
+if a>5 { a+b; } else if a>6 { a+b+c; }
+if a>5 {  }
+```   
+
 
 ### 2.5.2 Loops
 
-```while (<condition>) {<body>}```  
+```
+<loop-while> := while (<condition>) {<stmt>*}
 
-```do {<stmt>*} while (<condition>)```  
+<loop-do-while> := do {<stmt>*} while (<condition>)
 
-```for (<init>; <condition>; <inc>) { <body> }```  
+<loop-for> := for (<init>; <condition>; <inc>) { <stmt>* }
+
+
+<condition> := <comp> | <condition> <logic-op> <condition> | ( <condition> )
+<comp> := <expr> <comp-op> <expr>
+<comp-op> := == | != | < | > | <= | >=
+<logic-op> := && | || 
+
+```  
 
 
 ## 2.4 Functions
 
-```function := fun <id> () { <body> }```
-
-**Ejemplo:**
-
 ```
-fun Tilapia() { 
-    til a : byte; 
-    tyl b : byte; 
-    a+b; 
-    }
+<function> := fun <id> (<optional-args>) <optional-ret> { <stmt>* <return-exp> }
+<stmt> := <var-dec> | <assig> | <if-statement> | <loop> | <exp>
+<return-exp> := <exp>; | epsilon
+<optional-args> := <arg>* 
+<arg> := <id> : <type>,
+<optional-ret> := -> <type> | epsilon
+```  
+
+Example:
 ```
+fun MenaMood( mood : byte ) -> bytestring {
+    til mena : bytestring; 
+    if (mood == 1) {
+        mena = 'happy';
+    } else { mena = 'triste';}
+    mena;
+}
+```  
 
 Roadmap for this feature (by tai):  
 - no args, no ret  
@@ -76,7 +113,18 @@ Roadmap for this feature (by tai):
 
 _Goal: `fun <id> (<args>) [-> <type>] {<body>}`_  
 
- 
+First version old draft:   
+```function := fun <id> () { <body> }```
+
+Example:  
+ ```
+fun Tilapia() { 
+    til a : byte; 
+    tyl b : byte; 
+    a+b; 
+    }
+```   
+
 
 # 3. Tilapia
 
