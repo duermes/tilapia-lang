@@ -14,7 +14,7 @@
 **uword:** 64 bits unsigned integer  
 **word:** 64 bits signed integer  
 **ubyte:** 8 bits unsigned integer  
-**byte:** 8 bits signed integer 
+**byte:** 8 bits signed integer  
 **bool**: 64 bits (false 0 true any non-zero)  
 
 ## 2.2 Variables
@@ -22,7 +22,7 @@
 ```
 <var-dec> := til <id>: <type> <dec>;
 
-<dec> := = <expr> | epsilon ; 
+<dec> := = <exp> | epsilon  
 <type> := bytestring | byte | ubyte | word | uword
 
 
@@ -32,20 +32,33 @@
 Example:
 ``` til name : bytestring = "Hassan";```   
 
-## 2.3 Numerical Operators
+## 2.3 Arithmetic & Relational Operators
 
-```<expression> := <exp1> <valid operation> <exp2>;```  
-```<valid operator> := + | - | / | % | << | >>```  
+```
+<op-stmt> := <assig> | <arith-exp> ;
 
-`+`: suma  
-`-`: resta  
-`/`: división  
-`<<`: left shift  
-`>>`: right shift  
-`%`: modulo
+
+<assig> := <var> = <arith-exp>  
+<var> := <id>|<id>(<params>)  
+ 
+<arith-expr> := <arith-expr> <arith-op> <term> | <term>
+<term> := <factor> | ( <arith-expr> )
+<factor> := <var> | <literal>
+<literal> :=  raw value from data type;
+<arith-op> :=  + | - | * | / | % | << | >>  
+
+```  
+
+`- + - * / %`: usual arithmetic operators for addition, subtraction, multiplication, division and mod; valid only with same-type operands.  
+`- << >>`: bit shift operators, left and right; right operand must be a non-negative word.  
+
 
 Example:   
-```a+b``` 
+```
+a+b;
+(value) + 4 - 5;
+
+```  
 
 ## 2.5 Control Structures
 ### 2.5.1 Conditionals
@@ -122,7 +135,7 @@ Example:
  ```
 fish Tilapia() { 
     til a : byte; 
-    tyl b : byte; 
+    til b : byte; 
     a+b; 
     }
 ```   
@@ -130,4 +143,4 @@ fish Tilapia() {
 
 # 3. Tilapia
 
-Tilapia es el nombre común de casi cien especies de peces cíclidos antes conocidos como tilapinidos y ahora incluidos en los grupos taxonómicos celotilapina, coptodonina, heterotilapina, oreocromina, pelmatolapina y tilapia, de las cuales las económicamente más importantes son los coptodoninos y los oreochrominos.
+Tilapia es el nombre común de casi cien especies de peces cíclidos antes conocidos como tilapinidos y ahora incluidos en los grupos taxonómicos celotilapina, coptodonina, heterotilapina, oreocromina, pelmatolapina y tilapia, de las cuales las económicamente más importantes son los coptodoninos y los oreochrominos.  
