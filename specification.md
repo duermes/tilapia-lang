@@ -15,6 +15,7 @@
 **word:** 64 bits signed integer  
 **ubyte:** 8 bits unsigned integer  
 **byte:** 8 bits signed integer 
+**bool**: 64 bits (false 0 true any non-zero)  
 
 ## 2.2 Variables
 
@@ -22,7 +23,7 @@
 <var-dec> := til <id>: <type> <dec>;
 
 <dec> := = <expr> | epsilon ; 
-type := bytestring | byte | ubyte | word | uword
+<type> := bytestring | byte | ubyte | word | uword
 
 
 <assig> := <id> = <exp>;
@@ -34,7 +35,7 @@ Example:
 ## 2.3 Numerical Operators
 
 ```<expression> := <exp1> <valid operation> <exp2>;```  
-```<valid operator> := + | - | / | % | << | >>``  
+```<valid operator> := + | - | / | % | << | >>```  
 
 `+`: suma  
 `-`: resta  
@@ -75,9 +76,10 @@ if a>5 {  }
 
 <loop-for> := for (<init>; <condition>; <inc>) { <stmt>* }
 
-
-<condition> := <comp> | <condition> <logic-op> <condition> | ( <condition> )
-<comp> := <expr> <comp-op> <expr>
+<stmt> := <var-dec> | <assig> | <if-statement> | <loop> | <exp> | <break>
+<break> := </3;
+<condition> := <compar> | <condition> <logic-op> <condition> | ( <condition> )
+<compar> := <expr> <comp-op> <expr>
 <comp-op> := == | != | < | > | <= | >=
 <logic-op> := && | || 
 
@@ -87,7 +89,7 @@ if a>5 {  }
 ## 2.4 Functions
 
 ```
-<function> := fun <id> (<optional-args>) <optional-ret> { <stmt>* <return-exp> }
+<function> := fish <id> (<optional-args>) <optional-ret> { <stmt>* <return-exp> }
 <stmt> := <var-dec> | <assig> | <if-statement> | <loop> | <exp>
 <return-exp> := <exp>; | epsilon
 <optional-args> := <arg>* 
@@ -97,7 +99,7 @@ if a>5 {  }
 
 Example:
 ```
-fun MenaMood( mood : byte ) -> bytestring {
+fish MenaMood( mood : byte ) -> bytestring {
     til mena : bytestring; 
     if (mood == 1) {
         mena = 'happy';
@@ -111,14 +113,14 @@ Roadmap for this feature (by tai):
 - no args, with ret  
 - args and ret  
 
-_Goal: `fun <id> (<args>) [-> <type>] {<body>}`_  
+_Goal: `fish <id> (<args>) [-> <type>] {<body>}`_  
 
 First version old draft:   
-```function := fun <id> () { <body> }```
+```function := fish <id> () { <body> }```
 
 Example:  
  ```
-fun Tilapia() { 
+fish Tilapia() { 
     til a : byte; 
     tyl b : byte; 
     a+b; 
