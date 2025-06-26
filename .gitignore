@@ -1,39 +1,29 @@
-# shit
+_opam
+_build
+_boot
+_test_boot
+_perf
+_coverage
+__pycache__
+*.install
+
+# vim swap files
+*.swp
+*.swo
+
+# emacs lock files
+.#*
+
+# vscode settings
 .vscode
 
-# Prerequisites
-*.d
+# git-ps hooks
+.git-ps
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+.duneboot.*
+Makefile.dev
+src/dune_rules/setup.ml
+result
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-
-#shit
-.prettierignore 
+.DS_Store
+nix/profiles/

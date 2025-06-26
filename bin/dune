@@ -1,0 +1,4 @@
+(executable
+ (public_name tilapia)
+ (name main)
+ (libraries tilapia))
