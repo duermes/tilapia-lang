@@ -32,31 +32,26 @@
 Example:
 ```til name : bytestring = "Hassan";```   
 
-## 2.3 Arithmetic & Relational Operators
+## 2.3 Binary Operators
 
 ```
-<op-stmt> := <assig> | <arith-exp> ;
+<arith-op> := + | - | * | / | %
 
+<bitwise-op> := << | >>
 
-<assig> := <var> = <arith-exp>  
-<var> := <id>|<id>(<params>)  
- 
-<arith-expr> := <arith-expr> <arith-op> <term> | <term>
-<term> := <factor> | ( <arith-expr> )
-<factor> := <var> | <literal>
-<literal> :=  raw value from data type;
-<arith-op> :=  + | - | * | / | % | << | >>  
+<rel-op> := < | > | == | != | <= | >=
 
-```  
+<binary-op> := <arith-op> | <bitwise-op> | <rel-op>
+```
 
-`- + - * / %`: usual arithmetic operators for addition, subtraction, multiplication, division and mod; valid only with same-type operands.  
-`- << >>`: bit shift operators, left and right; right operand must be a non-negative word.  
+- `+ - * / %`: usual arithmetic operators for addition, subtraction, multiplication, division and mod; valid only with same-type operands.
+- `<< >>`: bit shift operators, left and right; right operand must be a non-negative word.
 
 
 Example:   
 ```
-a+b;
-(value) + 4 - 5;
+a + b
+(value) + 4 - 5
 
 ```  
 
