@@ -22,7 +22,7 @@
 ```
 <type> := bytestring | byte | ubyte | word | uword
 
-<var-init> := <expr> | epsilon
+<var-init> := = <expr> | epsilon
 
 <var-decl> := til <id> : <type> <var-init> ;
 
