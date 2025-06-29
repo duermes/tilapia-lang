@@ -97,12 +97,12 @@ if a>5 {  }
 ## 2.4 Functions
 
 ```
-<function> := fish <id> (<optional-args>) <optional-ret> { <stmt>* <return-exp> }
-<stmt> := <var-dec> | <assig> | <if-statement> | <loop> | <exp>
-<return-exp> := <exp>; | epsilon
-<optional-args> := <arg>* 
-<arg> := <id> : <type>,
-<optional-ret> := -> <type> | epsilon
+<arg> := <id> : <type> ,
+<args> := <arg>*
+
+<return-type> := -> <type> | epsilon
+
+<function> := fish <id> ( <args> ) <return-type> { <stmt>* <expr> }
 ```  
 
 Example:
@@ -111,8 +111,8 @@ fish MenaMood( mood : byte ) -> bytestring {
     til mena : bytestring; 
     if (mood == 1) {
         mena = 'happy';
-    } else { mena = 'triste';}
-    mena;
+    } else { mena = 'triste'; }
+    mena
 }
 ```  
 
