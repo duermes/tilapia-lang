@@ -41,7 +41,9 @@ Example:
 
 <rel-op> := < | > | == | != | <= | >=
 
-<binary-op> := <arith-op> | <bitwise-op> | <rel-op>
+<logical-op> := && | || 
+
+<binary-op> := <arith-op> | <bitwise-op> | <rel-op> | <logical-op>
 ```
 
 - `+ - * / %`: usual arithmetic operators for addition, subtraction, multiplication, division and mod; valid only with same-type operands.
@@ -78,19 +80,17 @@ if a>5 {  }
 ### 2.5.2 Loops
 
 ```
-<loop-while> := while (<condition>) {<stmt>*}
+<loop-while> := while <expr> {<stmt>*}
 
-<loop-do-while> := do {<stmt>*} while (<condition>)
+<loop-do-while> := do <comp-stmt> while <expr>
 
-<loop-for> := for (<init>; <condition>; <inc>) { <stmt>* }
+<loop-for> := for (<init> ; <expr> ; <expr>) <comp-stmt>
 
-<stmt> := <var-dec> | <assig> | <if-statement> | <loop> | <exp> | <break>
-<break> := </3;
-<condition> := <compar> | <condition> <logic-op> <condition> | ( <condition> )
-<compar> := <expr> <comp-op> <expr>
-<comp-op> := == | != | < | > | <= | >=
-<logic-op> := && | || 
+<loop> := <loop-while> | <loop-do-while> | <loop-for>
 
+<break> := </3 ;
+
+<stmt> := <var-decl> | <assign> | <if-statement> | <loop> | <expr> | <break>
 ```  
 
 
