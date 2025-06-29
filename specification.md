@@ -20,17 +20,17 @@
 ## 2.2 Variables
 
 ```
-<var-dec> := til <id>: <type> <dec>;
-
-<dec> := = <exp> | epsilon  
 <type> := bytestring | byte | ubyte | word | uword
 
+<var-init> := <expr> | epsilon
 
-<assig> := <id> = <exp>;
+<var-decl> := til <id> : <type> <var-init> ;
+
+<assign> := <id> = <expr> ;
 ```      
 
 Example:
-``` til name : bytestring = "Hassan";```   
+```til name : bytestring = "Hassan";```   
 
 ## 2.3 Arithmetic & Relational Operators
 
