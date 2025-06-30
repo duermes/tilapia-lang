@@ -5,20 +5,20 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github duermes/tilapia-lang))
 
-(authors "Author Name <author@example.com>")
+(authors "Lorena <author@example.com>")
 
 (maintainers "Maintainer Name <maintainer@example.com>")
 
-(license LICENSE)
+(license MIT)
 
-(documentation https://url/to/documentation)
+(documentation https://github.com/duermes/tilapia-lang/blob/main/specification.md)
 
 (package
  (name tilapia)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (synopsis "tilapias no difundir")
+ (description "no difundir tilapias")
  (depends ocaml)
  (tags
   ("add topics" "to describe" your project)))

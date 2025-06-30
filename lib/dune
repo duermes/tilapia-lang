@@ -1,2 +1,4 @@
 (library
- (name tilapia))
+ (name tilapia)
+ (modules en es)
+ )
