@@ -8,7 +8,7 @@
 
 ## 2.1 Data Types
 
-```<type> := byte | ubyte | word | uword | bytestring```
+```<type> := byte | ubyte | word | uword | bytestring | bool```
 
 **bytestring:** Used to store strings. Lenght and pointer to contigous valid byte instances. Supossed to work as a vector. (Initial length: Undefined til assigned value, only changes). Inmutable except assignation  
 **uword:** 64 bits unsigned integer  
@@ -134,6 +134,9 @@ fish Tilapia() {
     a+b;
     }
 ```
+
+## 2.5 Miscellaneous
+<expr> := 
 
 
 # 3. Tilapia

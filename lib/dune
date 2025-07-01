@@ -8,6 +8,6 @@
 
 (library
  (name tilapia)
- (modules en es parser lexer)
+ (modules ast parser lexer)
  
  )
