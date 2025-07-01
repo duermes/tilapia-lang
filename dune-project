@@ -1,5 +1,7 @@
 (lang dune 3.19)
 
+(using menhir 3.0)
+
 (name tilapia)
 
 (generate_opam_files true)
