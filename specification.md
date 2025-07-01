@@ -10,12 +10,12 @@
 
 ```<type> := byte | ubyte | word | uword | bytestring```
 
-**bytestring:** Used to store strings. Lenght and pointer to contigous valid byte instances. Supossed to work as a vector. (Initial length: Undefined til assigned value, only changes). Inmutable except assignation
-**uword:** 64 bits unsigned integer
-**word:** 64 bits signed integer
-**ubyte:** 8 bits unsigned integer
-**byte:** 8 bits signed integer
-**bool**: 64 bits (false 0 true any non-zero)
+**bytestring:** Used to store strings. Lenght and pointer to contigous valid byte instances. Supossed to work as a vector. (Initial length: Undefined til assigned value, only changes). Inmutable except assignation  
+**uword:** 64 bits unsigned integer  
+**word:** 64 bits signed integer  
+**ubyte:** 8 bits unsigned integer  
+**byte:** 8 bits signed integer  
+**bool**: 64 bits (false 0 true any non-zero)  
 
 ## 2.2 Variables
 
