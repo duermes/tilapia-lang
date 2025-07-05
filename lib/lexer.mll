@@ -41,9 +41,12 @@ rule token = parse
 (*Reserved Symbols*)
 | "til" { TYPE }
 | "fish" { FUNC }
-| 
-
-
+| "if" { IF }
+| "else" { ELSE }
+| "while" { WHILE }
+| "do" { DO }
+| "for" { FOR }
+| "</3" { BREAK }
 
 
 
