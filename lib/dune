@@ -1,13 +1,10 @@
-
-
 (include_subdirs unqualified)
+
 (menhir
  (modules parser))
 
- (ocamllex lexer)
+(ocamllex lexer)
 
 (library
  (name tilapia)
- (modules ast parser lexer)
- 
- )
+ (modules ast parser lexer))
