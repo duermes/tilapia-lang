@@ -9,9 +9,11 @@ let byte =
 let ubyte =
 let word = 
 let bytestring = 
-let id = 
+let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
 rule token = parse 
+| id { ID (Lexing.lexeme lexbuf) }     
+
 (*Binary Operators*)
 | '+' { PLUS }
 | '-' { MINUS }
