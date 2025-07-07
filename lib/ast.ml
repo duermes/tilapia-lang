@@ -1,5 +1,5 @@
 (*Data types*)
-type dtype =
+type literal =
   | Bytestring of string
   | Word of int64
   | Uword of int64
@@ -8,7 +8,7 @@ type dtype =
   | Bool of bool
 
 (*Operators*)
-type op =
+type binop =
   | Plus
   | Minus
   | Times
@@ -29,13 +29,13 @@ type op =
  optionally, a variable can bebinitialized on decl (ToDo)
  *)
 type expr =
-  | Binop of op * expr * expr
+  | Binop of binop * expr * expr
   | Id of string
-  | Literal of dtype
+  | Literal of literal
   | Function of string * expr list
 
 type stmt =
-  | Vardeclr of string * dtype
+  | VarDecl of string * expr option
   | Assign of string * expr
   | If of expr * stmt list * stmt list option
   | Loop
