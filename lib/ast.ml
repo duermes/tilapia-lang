@@ -14,14 +14,14 @@ type op =
   | Times
   | Divide
   | Mod
-  | Eqto
-  | Neqto
-  | Gt
-  | Lt
-  | Qeg
-  | Leq
-  | Rshift
-  | Lshift
+  | Eq
+  | GT
+  | LT
+  | NEq
+  | GEq
+  | LEq
+  | RShift
+  | LShift
   | And
   | Or
 

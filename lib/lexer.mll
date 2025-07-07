@@ -23,9 +23,9 @@ rule token = parse
 | "<<" { LSHIFT }
 | ">>" { RSHIFT }
 | '<' { LT }
-| '>' { GT}
-| "==" { EQTO }
-| "!=" { NOTEQTO }
+| '>' { GT }
+| "==" { EQ }
+| "!=" { NEQ }
 | "<=" { LEQ }
 | ">=" { GEQ }
 | "&&" { AND }

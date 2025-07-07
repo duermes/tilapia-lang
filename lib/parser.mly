@@ -4,7 +4,7 @@
 %token <bool> BOOL
 %token COLON SEMICOLON DOUBLE_QUOTE LPAREN RPAREN LBRACE RBRACE
 %token PLUS MINUS TIMES DIVIDE MOD
-%token EQTO NOTEQTO GT LT GEQ LEQ
+%token EQ GT LT NEQ GEQ LEQ
 %token LSHIFT RSHIFT
 %token AND OR
 %token ID
@@ -15,8 +15,8 @@
 (*Associativity and Precedence*)
 %left OR
 %left AND
-%right EQTO, NEQTO (*== !=*)
-%left GT, LT, GEW, LEQ
+%right EQ, NEQ (*== !=*)
+%left GT, LT, GEQ, LEQ
 
 %left PLUS MINUS
 %right TIMES DIVIDE MOD
