@@ -41,3 +41,5 @@ type stmt =
   | Loop
   | Expr of expr
   | Break
+
+type program = stmt list
