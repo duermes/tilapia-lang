@@ -1,11 +1,24 @@
 (*Data types*)
-type literal =
-  | Bytestring of string
-  | Word of int64
-  | Uword of int64
-  | Byte of int64
-  | Ubyte of int64
-  | Bool of bool
+
+module DType = struct 
+  type t = 
+    | Bytestring 
+    | Word 
+    | Uword
+    | Byte 
+    | Ubyte 
+    | Bool 
+end
+
+module Literal = struct
+  type t =
+    | Bytestring of string
+    | Word of int64
+    | Uword of int64
+    | Byte of int64
+    | Ubyte of int64
+    | Bool of bool
+end 
 
 (*Operators*)
 type binop =
@@ -31,7 +44,7 @@ type binop =
 type expr =
   | Binop of binop * expr * expr
   | Id of string
-  | Literal of literal
+  | Literal of Literal.t
   | Function of string * expr list
 
 type stmt =

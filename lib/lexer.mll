@@ -5,14 +5,36 @@
 }
 
 
-let byte = 
-let ubyte =
-let word = 
-let bytestring = 
+(*let byte = 
+let ubyte =  *)
+let uint = ['0'-'9']+
+let int = '-'? uint
+(* let c_delimiter = ["'"] 
+let c_content = [^ ''']* *)
+
+let str_delimiter = ['"']
+let str_content = [^ '"']*
+
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
 rule token = parse 
 | id { ID (Lexing.lexeme lexbuf) }     
+(*Literals*)
+(*| bytestring { LBYT {Lexing.lexeme lexbuf} }*)
+| str_delimiter { DOUBLE_QUOTE }
+| str_content as s { LBYT (Lexing.lexeme lexbuf) }
+(* | c_delimiter { QUOTE }
+| c_content as s {  } *)
+| int as s { WORD (Lexing.lexeme lexbuf) }
+
+
+
+(*Data Type Token*)
+| "byte" { BYTE }
+| "ubyte" { UBYTE }
+| "word" { WORD }
+| "uword" { UWORD }
+| "bytestring" { BYTESTRING }
 
 (*Binary Operators*)
 | '+' { PLUS }
