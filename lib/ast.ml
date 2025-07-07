@@ -16,7 +16,7 @@ type op =
   | Mod
   | Eqto
   | Neqto
-  | Gtpero
+  | Gt
   | Lt
   | Qeg
   | Leq
