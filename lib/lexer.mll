@@ -12,28 +12,32 @@ let int = '-'? uint
 (* let c_delimiter = ["'"] 
 let c_content = [^ ''']* *)
 
+let white = [' ' '\t']+
+let newline = '\r' | '\n' | "\r\n"
+
 let str_delimiter = ['"']
 let str_content = [^ '"']*
 
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
-rule token = parse 
+rule token = parse  
 | id { ID (Lexing.lexeme lexbuf) }     
 (*Literals*)
 (*| bytestring { LBYT {Lexing.lexeme lexbuf} }*)
 | str_delimiter { DOUBLE_QUOTE }
-| str_content as s { LBYT (Lexing.lexeme lexbuf) }
+| str_content as s { LBYTESTRING (Lexing.lexeme lexbuf) }    (*Returns the complete matched re*)
 (* | c_delimiter { QUOTE }
 | c_content as s {  } *)
-| int as s { WORD (Lexing.lexeme lexbuf) }
+| int as s { LWORD  ( int_of_string (Lexing.lexeme lexbuf)) }
 
+| white { read lexbuf }
+| newline { read lexbuf }
 
-
-(*Data Type Token*)
-| "byte" { BYTE }
-| "ubyte" { UBYTE }
+(*Data Type Token WE ARE JUST USING AT FIRST WORD AND BYTESTRING*)
+(* | "byte" { BYTE }
+| "ubyte" { UBYTE } *)
 | "word" { WORD }
-| "uword" { UWORD }
+(* | "uword" { UWORD } *)
 | "bytestring" { BYTESTRING }
 
 (*Binary Operators*)

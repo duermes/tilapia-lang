@@ -1,8 +1,7 @@
 %{ open Ast %}
 %token TIL (**)
-%token BYTE UBYTE WORD UWORD BYTESTRING
-%token LBYT, LWORD, LUWORD, LBYTE, LUBYTE, LBOOL
-%token <bool> BOOL
+%token WORD BYTESTRING
+%token LBYTESTRING LWORD
 %token COLON SEMICOLON DOUBLE_QUOTE LPAREN RPAREN LBRACE RBRACE QUOTE
 %token PLUS MINUS TIMES DIVIDE MOD
 %token EQ GT LT NEQ GEQ LEQ
@@ -40,9 +39,9 @@ datatype:
 
 
 varinit:
-| ASG ; expr; { VarInit (Ast.Eq, $2) }
+// | ASG ; expr; { VarInit (Ast.Eq, $2) }
 | EOF { VarInit (Ast.Eq, Ast.Empty) }
 
 
-expr:
-| 
+// expr:
+// | 
