@@ -1,13 +1,13 @@
 (*Data types*)
 
-module DType = struct 
-  type t = 
-    | Bytestring 
-    | Word 
+module DType = struct
+  type t =
+    | Bytestring
+    | Word
     (* | Uword
-    | Byte 
+    | Byte
     | Ubyte  *)
-    | Bool 
+    | Bool
 end
 
 module Literal = struct
@@ -18,7 +18,7 @@ module Literal = struct
     | Byte of int64
     | Ubyte of int64
     | Bool of bool
-end 
+end
 
 (*Operators*)
 type binop =
@@ -42,30 +42,28 @@ type binop =
  optionally, a variable can bebinitialized on decl (ToDo)
  *)
 
- (* I am missing declare the data type here Dtype.t *)
+(* I am missing declare the data type here Dtype.t *)
 
 type expr =
   | Operation of binop * expr * expr (*e+e*)
   | Id of string (*x*)
   | Literal of Literal.t (*7, hello*)
-  | FunctionCall of string * expr list 
+  | FunctionCall of string * expr list
   | Empty
 
 type fun_param = string * DType.t
 
-
 type stmt =
-  | VarDecl of DType.t * string * expr option  (*x*)
+  | VarDecl of DType.t * string * expr option (*x*)
   | Assign of string * expr
   | If of expr list * stmt list * stmt list option (*if e {} [else| else if] *)
   | Loop
   | Expr of expr
-  | Break 
+  | Break
   | FunctionDef of string * fun_param list * expr * stmt list
   | While of expr list * stmt list
   | DoWhile of stmt list * expr list
   | PrintWord of Literal.t
   | PrintString of Literal.t
-
 
 type program = stmt list

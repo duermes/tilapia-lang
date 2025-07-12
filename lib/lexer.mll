@@ -5,11 +5,11 @@
 }
 
 
-(*let byte = 
+(*let byte =
 let ubyte =  *)
 let uint = ['0'-'9']+
 let int = '-'? uint
-(* let c_delimiter = ["'"] 
+(* let c_delimiter = ["'"]
 let c_content = [^ ''']* *)
 
 let white = [' ' '\t']+
@@ -20,8 +20,8 @@ let str_content = [^ '"']*
 
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
-rule token = parse  
-| id { ID (Lexing.lexeme lexbuf) }     
+rule token = parse
+| id { ID (Lexing.lexeme lexbuf) }
 (*Literals*)
 (*| bytestring { LBYT {Lexing.lexeme lexbuf} }*)
 | str_delimiter { DOUBLE_QUOTE }
@@ -55,7 +55,7 @@ rule token = parse
 | "<=" { LEQ }
 | ">=" { GEQ }
 | "&&" { AND }
-| "||" { OR } 
+| "||" { OR }
 
 | '=' { ASG }
 | ':' { COLON }

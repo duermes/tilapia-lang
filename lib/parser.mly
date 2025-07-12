@@ -2,7 +2,7 @@
 %token FUNC (*fish*)
 %token TIL (*til*)
 %token WORD BYTESTRING BOOL
-%token <string> LBYTESTRING 
+%token <string> LBYTESTRING
 %token <int> LWORD
 %token <bool> LBOOL
 %token COLON SEMICOLON DOUBLE_QUOTE LPAREN RPAREN LBRACE RBRACE QUOTE COMMA
@@ -11,13 +11,13 @@
 %token LSHIFT RSHIFT
 %token AND OR
 %token <string> ID
-%token ASG (*= ASSIGMENT*) 
-%token EOF 
+%token ASG (*= ASSIGMENT*)
+%token EOF
 %token TYPE FUNC IF ELSE WHILE DO FOR BREAK ARROW
 %token PRINTSTR PRINTINT
 
 (*Associativity and Precedence*)
-%left OR 
+%left OR
 %left AND
 %nonassoc EQ, NEQ (*== !=*)
 %left GT, LT, GEQ, LEQ
@@ -41,7 +41,7 @@ expr:
 | FUNC ID params { FunctionCall($2, $3) }
 
 stmt:
-| TIL ID COLON dtype 
+| TIL ID COLON dtype
 | FUNC ID funparams bracedBody ARROW dtype { FunctionDef($2, $3) } //fish Die (mood: byte) -> bytestring {<body> <return-value>}
 | ID ASG EXPR { Assign($1, $3) }
 | IF params bracedBody iftail { If($2, $3, $4) }
