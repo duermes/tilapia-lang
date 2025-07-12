@@ -1,5 +1,5 @@
 %{ open Ast %}
-%token FUNC (*fish*)
+%token FUNCALL
 %token TIL (*til*)
 %token WORD BYTESTRING BOOL
 %token <string> LBYTESTRING
@@ -38,7 +38,7 @@ expr:
 | LBOOL { Literal.BOOL $1 }
 | expr operator expr { Operation($2, $1, $3) }
 | ID { Id $1 }
-| FUNC ID params { FunctionCall($2, $3) }
+| FUNCALL ID params { FunctionCall($2, $3) }
 
 stmt:
 | TIL ID COLON dtype
