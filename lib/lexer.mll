@@ -30,7 +30,7 @@ rule token = parse
 | c_content as s {  } *)
 | int as s { LWORD  ( int_of_string (Lexing.lexeme lexbuf)) }
 
-| white { read lexbuf }
+| [' ' '\t']+ { read lexbuf }
 | newline { read lexbuf }
 
 (*Data Type Token WE ARE JUST USING AT FIRST WORD AND BYTESTRING*)
@@ -65,6 +65,7 @@ rule token = parse
 | ')' { RPAREN }
 | '{' { LBRACE }
 | '}' { RBRACE }
+| ',' { COMMA }
 
 (*Reserved Symbols*)
 | "til" { TYPE }
@@ -75,6 +76,7 @@ rule token = parse
 | "do" { DO }
 | "for" { FOR }
 | "</3" { BREAK }
+| "->" { ARROW }
 
 
 

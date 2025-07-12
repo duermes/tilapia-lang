@@ -4,9 +4,9 @@ module DType = struct
   type t = 
     | Bytestring 
     | Word 
-    | Uword
+    (* | Uword
     | Byte 
-    | Ubyte 
+    | Ubyte  *)
     | Bool 
 end
 
@@ -41,18 +41,25 @@ type binop =
 (*
  optionally, a variable can bebinitialized on decl (ToDo)
  *)
+
+ (* I am missing declare the data type here Dtype.t *)
+
 type expr =
-  | Binop of binop * expr * expr
-  | Id of string
-  | Literal of Literal.t
-  | Function of string * expr list
+  | Operation of binop * expr * expr (*e+e*)
+  | Id of string (*x*)
+  | Literal of Literal.t (*7, hello*)
+  | FunctionCall of string * expr list 
+  | Empty
+
+type param = string * DType.t
 
 type stmt =
-  | VarDecl of string * expr option
+  | VarDecl of DType.t * string * expr option  (*x*)
   | Assign of string * expr
   | If of expr * stmt list * stmt list option
   | Loop
   | Expr of expr
   | Break
+  | FunctionDef of string * param list * expr * stmt list
 
 type program = stmt list

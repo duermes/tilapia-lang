@@ -104,6 +104,7 @@ if a>5 {  }
 
 <function> := fish <id> ( <args> ) <return-type> { <stmt>* <expr> }
 ```
+Return value without semicolon  
 
 Example:
 ```
@@ -114,6 +115,8 @@ fish MenaMood( mood : byte ) -> bytestring {
     } else { mena = 'triste'; }
     mena
 }
+
+MenaMood("TRISTE": bytestring)  
 ```
 
 Roadmap for this feature (by tai):
@@ -131,7 +134,7 @@ Example:
 fish Tilapia() {
     til a : byte;
     til b : byte;
-    a+b;
+    a+b
     }
 ```
 
