@@ -31,11 +31,6 @@
 progam:
 | EOF {[]}
 
-varinit:
-// | ASG ; expr; { VarInit (Ast.Eq, $2) }
-| EOF { VarInit (Ast.Eq, Empty) }
-| ASG expr { $2 }
-
 expr:
 | LBYTESTRING { Literal.ByteString $1 }
 | LWORD { Literal.Word $1 }
@@ -43,13 +38,18 @@ expr:
 | expr operator expr { Operation($2, $1, $3) }
 | ID { Id $1 }
 | FUNC ID params { FunctionCall($2, $3) }
-| 
-
 
 stmt:
 | TIL ID COLON dtype 
 | FUNC ID funparams bracedBody ARROW dtype { FunctionDef($2, $3) } //fish Die (mood: byte) -> bytestring {<body> <return-value>}
 | ID ASG EXPR { Assign($1, $3) }
+| IF params bracedBody iftail { }
+
+
+iftail:
+| ELSE bracedBody { }
+| ELSE IF parambs bracedBody iftail { }
+| /* As empty as my CV */ { Empty }
 
 
 // WE might (MUST) re-writte this because we are missing expressions literals (or not anymore)

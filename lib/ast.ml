@@ -51,15 +51,18 @@ type expr =
   | FunctionCall of string * expr list 
   | Empty
 
-type param = string * DType.t
+type fun_param = string * DType.t
 
 type stmt =
   | VarDecl of DType.t * string * expr option  (*x*)
   | Assign of string * expr
-  | If of expr * stmt list * stmt list option
+  | If of expr * expr list * stmt list option (*CONTINUE CODING PARSER FROM HERE*)
   | Loop
   | Expr of expr
   | Break
-  | FunctionDef of string * param list * expr * stmt list
+  | FunctionDef of string * fun_param list * expr * stmt list
+
+
+ 
 
 type program = stmt list
