@@ -14,6 +14,7 @@
 %token ASG (*= ASSIGMENT*) 
 %token EOF 
 %token TYPE FUNC IF ELSE WHILE DO FOR BREAK ARROW
+%token PRINTSTR PRINTINT
 
 (*Associativity and Precedence*)
 %left OR 
@@ -43,13 +44,19 @@ stmt:
 | TIL ID COLON dtype 
 | FUNC ID funparams bracedBody ARROW dtype { FunctionDef($2, $3) } //fish Die (mood: byte) -> bytestring {<body> <return-value>}
 | ID ASG EXPR { Assign($1, $3) }
-| IF params bracedBody iftail { }
+| IF params bracedBody iftail { If($2, $3, $4) }
+| BREAK { Break }
+| WHILE params loopBody { While($2, $3) }
+| DO loopBody WHILE params  { While($2, $3) }
+| PRINTINT LWORD { PrintWord($2) }
+| PRINTSTR LBYTESTRING { PrintString($2) }
+
 
 
 iftail:
-| ELSE bracedBody { }
-| ELSE IF parambs bracedBody iftail { }
-| /* As empty as my CV */ { Empty }
+| ELSE bracedBody { $2 }
+| ELSE IF params bracedBody iftail { If($3, $4, $5) }
+| /* As empty as my memory */ { [] }
 
 
 // WE might (MUST) re-writte this because we are missing expressions literals (or not anymore)
@@ -57,7 +64,7 @@ param:
 | expr { $1 }
 
 params:
-| LPAREN separated_list(COMMA, param) RPAREN { $2 }
+| separated_list(COMMA, param) { $2 }
 
 funparam:
 | id COLON dtype  { ($1, $2) }  // mood: byte
@@ -68,6 +75,9 @@ funparams:
 body:
 | expr SEMICOLON { $1 }
 | stmt SEMICOLON { $1 }
+
+loopBody:
+| LBRACE body* RBRACE { $2 }
 
 bracedBody:
 | LBRACE body expr RBRACE { ($2, $3) }

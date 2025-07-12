@@ -70,7 +70,7 @@ a + b
 
 Examples:
 ```
-if a>5 { a+b; }
+if a>5, b>3 { a+b; }
 if a>5 { a+b; } else { a = 0; }
 if a>5 { a+b; } else if a>6 { a+b+c; }
 if a>5 {  }

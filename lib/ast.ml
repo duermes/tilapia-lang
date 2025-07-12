@@ -53,16 +53,19 @@ type expr =
 
 type fun_param = string * DType.t
 
+
 type stmt =
   | VarDecl of DType.t * string * expr option  (*x*)
   | Assign of string * expr
-  | If of expr * expr list * stmt list option (*CONTINUE CODING PARSER FROM HERE*)
+  | If of expr list * stmt list * stmt list option (*if e {} [else| else if] *)
   | Loop
   | Expr of expr
-  | Break
+  | Break 
   | FunctionDef of string * fun_param list * expr * stmt list
+  | While of expr list * stmt list
+  | DoWhile of stmt list * expr list
+  | PrintWord of Literal.t
+  | PrintString of Literal.t
 
-
- 
 
 type program = stmt list
