@@ -43,7 +43,7 @@ expr:
 stmt:
 | TIL ID COLON dtype
 | FUNC ID funparams bracedBody ARROW dtype { FunctionDef($2, $3) } //fish Die (mood: byte) -> bytestring {<body> <return-value>}
-| ID ASG EXPR { Assign($1, $3) }
+| ID ASG expr { Assign($1, $3) }
 | IF params bracedBody iftail { If($2, $3, $4) }
 | BREAK { Break }
 | WHILE params loopBody { While($2, $3) }
@@ -64,10 +64,10 @@ param:
 | expr { $1 }
 
 params:
-| separated_list(COMMA, param) { $2 }
+| separated_list(COMMA, param) { $1 }
 
 funparam:
-| id COLON dtype  { ($1, $2) }  // mood: byte
+| ID COLON dtype  { ($1, $2) }  // mood: byte
 
 funparams:
 | LPAREN separated_list(COMMA, funparam) RPAREN { $2 }
