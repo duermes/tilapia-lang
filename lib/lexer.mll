@@ -30,8 +30,8 @@ rule token = parse
 | c_content as s {  } *)
 | int as s { LWORD  ( int_of_string (Lexing.lexeme lexbuf)) }
 
-| [' ' '\t']+ { read lexbuf }
-| newline { read lexbuf }
+| [' ' '\t']+ { token lexbuf }
+| newline { token lexbuf }
 
 (*Data Type Token WE ARE JUST USING AT FIRST WORD AND BYTESTRING*)
 (* | "byte" { BYTE }
