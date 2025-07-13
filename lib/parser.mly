@@ -5,7 +5,7 @@ open Ast
 %token TIL (*til*)
 %token WORD BYTESTRING BOOL
 %token <string> LBYTESTRING
-%token <int> LWORD
+%token <int64> LWORD
 %token <bool> LBOOL
 %token COLON SEMICOLON DOUBLE_QUOTE LPAREN RPAREN LBRACE RBRACE QUOTE COMMA
 %token PLUS MINUS TIMES DIVIDE MOD
@@ -51,8 +51,8 @@ stmt:
 | BREAK { Break }
 | WHILE params loopBody { While($2, $3) }
 | DO loopBody WHILE params  { While($2, $3) }
-| PRINTINT LWORD { PrintWord($2) }
-| PRINTSTR LBYTESTRING { PrintString($2) }
+| PRINTINT LWORD { PrintWord (Literal.Word $2) }
+| PRINTSTR LBYTESTRING { PrintString (Literal.ByteString $2) }
 
 
 

@@ -12,11 +12,11 @@ end
 
 module Literal = struct
   type t =
-    | Bytestring of string
+    | ByteString of string
     | Word of int64
-    | Uword of int64
+    | UWord of int64
     | Byte of int64
-    | Ubyte of int64
+    | UByte of int64
     | Bool of bool
 end
 
