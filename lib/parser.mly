@@ -32,6 +32,7 @@
 
 // Grammar rules, valid ways to writte my lang
 progam:
+| stmt list EOF {[$1]}
 | EOF {[]}
 
 expr:
