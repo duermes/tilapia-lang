@@ -61,8 +61,8 @@ type stmt =
   | Expr of expr
   | Break
   | FunctionDef of string * fun_param list * expr * stmt list
-  | While of expr list * stmt list
-  | DoWhile of stmt list * expr list
+  | While of expr * stmt list
+  | DoWhile of expr * stmt list
   | PrintWord of Literal.t
   | PrintString of Literal.t
 

@@ -49,8 +49,8 @@ stmt:
 | ID ASG expr { Assign($1, $3) }
 | IF params bracedBody iftail { If($2, $3, $4) }
 | BREAK { Break }
-| WHILE params loopBody { While($2, $3) }
-| DO loopBody WHILE params  { While($2, $3) }
+| WHILE expr loopBody { While ($2, $3) }
+| DO loopBody WHILE expr { DoWhile ($4, $2) }
 | PRINTINT LWORD { PrintWord (Literal.Word $2) }
 | PRINTSTR LBYTESTRING { PrintString (Literal.ByteString $2) }
 
@@ -70,13 +70,15 @@ params:
 | separated_list(COMMA, param) { $1 }
 
 funparam:
-| ID COLON dtype  { ($1, $2) }  // mood: byte
+| ID COLON dtype { ($1, $2) } // mood: byte
 
 funparams:
 | LPAREN separated_list(COMMA, funparam) RPAREN { $2 }
 
 body:
+(*
 | expr SEMICOLON { $1 }
+*)
 | stmt SEMICOLON { $1 }
 
 loopBody:
