@@ -21,10 +21,8 @@ let op_instructions = function
   | NEq     -> "\tcmp rax, rbx\n" ^ "\txsetne al\n" ^ "\txmovzx rax, al\n"          (* rax = (rax != rbx) ? 1 : 0 *)
   | GEq     -> "\tcmp rax, rbx\n" ^ "\txsetge al\n" ^ "\txmovzx rax, al\n"          (* rax = (rax >= rbx) ? 1 : 0 *)
   | LEq     -> "\tcmp rax, rbx\n" ^ "\txsetle al\n" ^ "\txmovzx rax, al\n"          (* rax = (rax <= rbx) ? 1 : 0 *)
-  | RShift  -> "\tshr rax, cl\n"       (* rbx in cl *)
-  | LShift  -> "\tshl rax, cl\n"       (* rbx in cl *)
-  | And     -> "\tand rax, rbx\n"
-  | Or      -> "\tor rax, rbx\n"
+  | LAnd     -> "\tand rax, rbx\n"
+  | LOr      -> "\tor rax, rbx\n"
 
 
 (* 
