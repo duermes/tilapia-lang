@@ -3,10 +3,8 @@ open Template
 open Buffer
 
 let code = create 50
-let stackp = ref 0
-let labelp = ref 0
-let exitp = ref 0
-let testp = ref 0
+let data_declr = create 50
+
 
 let op_instructions = function
   | Plus -> "\tadd rax, rbx\n"
@@ -40,17 +38,17 @@ let print_word n =
 (*constant build*)
 let asm_word name n =
   "\t" ^ name ^ ": dq " ^ n ^ "\n"
-  |> add_string code
+  |> add_string data_declr
 
 let asm_bool name n =
   let v = if n then "1" else "0" in
   "\t"^ name ^ ": dq " ^ v ^ "\n"
-  |> add_string code
+  |> add_string data_declr
 
 let asm_bytestring name n =
   "\t" ^ name ^ ": db " ^ n ^ ", 10\n" 
   ^ "\t"^ name ^"_len = $ -" ^ n
-  |> add_string code
+  |> add_string data_declr
 
 
 (*Push to rax var to use*)
@@ -61,21 +59,45 @@ let asm_op op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
   |> add_string code
 
-let asm_fundef n = "code"
-let codegenx86_main exp = asm_fundef "main"
-let rec codegenx86_prog = function
-  | []                              -> failwith "Codegenx86 requires a 'main' function."
-  | FunDef {("main", args, body)}::ys -> codegenx86_main body
-  | FunDef (name, args, body)::ys   ->
-    codegenx86_func name args body;
-    codegenx86_prog ys
 
+
+
+
+
+let codegenx86_expr expr =
+match expr with
+| Literal (Word n) ->
+    add_string code ("\tmov rax, " ^ Int64.to_string n ^ "\n")
+| _ -> () 
+
+
+let codegenx86_func (FunDef { id; args; body; retval; _ }) =
+  add_string code ("; funcion: " ^ id ^ "\n");
+  codegenx86_args args;
+  Array.iter codegenx86_stmt body;
+  (match retval with Some e -> codegenx86_expr e | None -> ());
+  add_string code ("; fin funcion: " ^ id ^ "\n")
+
+
+(*toplevel*)
+let codegenx86_prog prog =
+  let found_main = ref false in
+  Array.iter (function
+    | FunDef f when f.id = "main" ->
+        found_main := true
+    | FunDef f->
+        codegenx86_func f
+  ) prog;
+  if not !found_main then
+    failwith "Codegenx86 requires a 'main' function."
 
 let compile prog =
   reset code;
+  reset data_declr;
   add_string code codegen_prefix;
+  output_buffer stdout data_declr;
   add_string code codegen_main;
-
+  codegenx86_prog prog;
   add_string code codegen_suffix;
   output_buffer stdout code;
   ""
