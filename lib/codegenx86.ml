@@ -49,7 +49,7 @@ let compile prog =
   reset code;
   add_string code codegen_prefix;
   add_string code codegen_main;
-  
+  prog
   add_string code codegen_suffix;
   output_buffer stdout code;
   ""
