@@ -21,6 +21,7 @@ rule token = parse
 | ';' { SEMICOLON }
 
 | "->" { ARROW }
+| "</3" { BREAK }
 
 | "==" { EQ }
 | "!=" { NEQ }
@@ -47,7 +48,6 @@ rule token = parse
 | "for" { FOR }
 | "while" { WHILE }
 | "do" { DO }
-| "</3" { BREAK }
 
 | "fish" { FUNC }
 | "til" { LET }
