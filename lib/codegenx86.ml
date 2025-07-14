@@ -66,7 +66,7 @@ let asm_binop op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
   |> add_string code
 
-let rec codegenx86_stmt stmt =
+let codegenx86_stmt stmt =
   match stmt with
   | Ignore (Literal (Word n)) ->
       add_string code ("\tmov rax, " ^ Int64.to_string n ^ "\n")
@@ -78,7 +78,7 @@ let codegenx86_expr expr =
       add_string code ("\tmov rax, " ^ Int64.to_string n ^ "\n")
   | _ -> ()
 
-let codegenx86_args args = ()
+let codegenx86_args _ = ()
 
 let codegenx86_func (FunDef { id; args; body; retval; _ }) =
   add_string code ("; funcion: " ^ id ^ "\n");
