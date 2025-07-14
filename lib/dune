@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 (include_subdirs unqualified)
 
 ; (menhir
@@ -9,3 +10,13 @@
  (name tilapia)
  (modules ast codegenx86 template)
 )
+=======
+(menhir
+ (modules parser))
+
+(ocamllex lexer)
+
+(library
+ (name tilapia)
+ (modules ast lexer parser typ literal codegenx86 template))
+>>>>>>> main
