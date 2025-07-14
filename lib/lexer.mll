@@ -46,10 +46,10 @@ rule token = parse
 | '<' { LT }
 | '>' { GT }
 
-| "bool" { BOOL }
-| "word" { WORD }
-| "bytestring" { BYTESTRING }
-| "byte" { BYTE }
+| "bool" { TYP_BOOL }
+| "word" { TYP_WORD }
+| "byte" { TYP_BYTE }
+| "bytestring" { TYP_BYTESTRING }
 
 | "if" { IF }
 | "else" { ELSE }
@@ -58,13 +58,13 @@ rule token = parse
 | "while" { WHILE }
 | "do" { DO }
 
-| "fish" { FUNC }
+| "fish" { DEFUN }
 | "til" { LET }
 | '\'' { lit_byte lexbuf }
 | '"' { let buf = Buffer.create 16 in lit_bytestring buf lexbuf }
 
-| bool as b { LIT_BOOL (Bool.of_string b) }
-| int as i { LIT_WORD (Int.of_string i) }
+| bool as b { LIT_BOOL (bool_of_string b) }
+| int as i { LIT_WORD (Int64.of_string i) }
 
 | id as ident { ID ident }
 
