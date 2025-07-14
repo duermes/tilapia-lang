@@ -27,7 +27,7 @@ let op_instructions = function
   | Or      -> "\tor rax, rbx\n"
 
 
-
+(* 
 let asm_word n =
   " \tdb " ^ n ^ ", 0\n"
   |> add_string code
@@ -70,4 +70,4 @@ let compile stmts =
   ) stmts;
   add_string code codegen_suffix;
   output_buffer stdout code;
-  ""
+  "" *)
