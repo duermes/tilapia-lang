@@ -99,5 +99,4 @@ let compile prog =
   add_string code codegen_main;
   codegenx86_prog prog;
   add_string code codegen_suffix;
-  output_buffer stdout code;
-  ""
+  output_buffer stdout code
