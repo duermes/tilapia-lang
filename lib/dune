@@ -5,4 +5,4 @@
 
 (library
  (name tilapia)
- (modules ast parser lexer))
+ (modules typ literal ast parser))
