@@ -2,7 +2,10 @@
 
 ## 1.1 Introduction
 
+
 ## 1.2 Objectives
+- Herramientas usar (implementar o usar ciertas librerias para el lenguaje)
+
 
 # 2. Syntax
 
