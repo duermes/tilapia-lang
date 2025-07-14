@@ -71,25 +71,24 @@ let stmt :=
 let expr :=
   | func = id ; args = delimited(LPAREN, expr*, RPAREN) ;
     { Ast.Call (func, Array.of_list args) }
-  | lhs = expr ; op = binop ; rhs = expr ;
-    { Ast.BinOp (op, lhs, rhs) }
+  | binop
   | l = literal ; < Ast.Literal >
   | x = id ; < Ast.Variable >
 
 let binop :=
-  | PLUS ; { Ast.Plus }
-  | MINUS ; { Ast.Minus }
-  | TIMES ; { Ast.Times }
-  | DIVIDE ; { Ast.Divide }
-  | MOD ; { Ast.Mod }
-  | EQ ; { Ast.Eq }
-  | GT ; { Ast.GT }
-  | LT ; { Ast.LT }
-  | NEQ ; { Ast.NEq }
-  | GEQ ; { Ast.GEq }
-  | LEQ ; { Ast.LEq }
-  | LAND ; { Ast.LAnd }
-  | LOR ; { Ast.LOr }
+  | e1 = expr ; PLUS ; e2 = expr ; { Ast.BinOp (Ast.Plus, e1, e2) }
+  | e1 = expr ; MINUS ; e2 = expr ; { Ast.BinOp (Ast.Minus, e1, e2) }
+  | e1 = expr ; TIMES ; e2 = expr ; { Ast.BinOp (Ast.Times, e1, e2) }
+  | e1 = expr ; DIVIDE ; e2 = expr ; { Ast.BinOp (Ast.Divide, e1, e2) }
+  | e1 = expr ; MOD ; e2 = expr ; { Ast.BinOp (Ast.Mod, e1, e2) }
+  | e1 = expr ; EQ ; e2 = expr ; { Ast.BinOp (Ast.Eq, e1, e2) }
+  | e1 = expr ; GT ; e2 = expr ; { Ast.BinOp (Ast.GT, e1, e2) }
+  | e1 = expr ; LT ; e2 = expr ; { Ast.BinOp (Ast.LT, e1, e2) }
+  | e1 = expr ; NEQ ; e2 = expr ; { Ast.BinOp (Ast.NEq, e1, e2) }
+  | e1 = expr ; GEQ ; e2 = expr ; { Ast.BinOp (Ast.GEq, e1, e2) }
+  | e1 = expr ; LEQ ; e2 = expr ; { Ast.BinOp (Ast.LEq, e1, e2) }
+  | e1 = expr ; LAND ; e2 = expr ; { Ast.BinOp (Ast.LAnd, e1, e2) }
+  | e1 = expr ; LOR ; e2 = expr ; { Ast.BinOp (Ast.LOr, e1, e2) }
 
 let id := ID
 
