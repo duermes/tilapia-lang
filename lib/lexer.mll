@@ -1,82 +1,87 @@
 {
-    open Lexing
-    open Parser
-    exception SyntaxError of string
+open Lexing
+open Parser
+
+exception Error of string
+
+let char_escape = function
+  | 'b' -> '\b'
+  | 'n' -> '\n'
+  | 'r' -> '\r'
+  | 't' -> '\t'
+  | c -> c
 }
 
+let bool = "true" | "false"
 
-(*let byte =
-let ubyte =  *)
-let uint = ['0'-'9']+
+let uint = ['0'-'9']
 let int = '-'? uint
-(* let c_delimiter = ["'"]
-let c_content = [^ ''']* *)
-
-let white = [' ' '\t']+
-let newline = '\r' | '\n' | "\r\n"
-
-let str_delimiter = ['"']
-let str_content = [^ '"']*
 
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
 rule token = parse
-| id { ID (Lexing.lexeme lexbuf) }
-(*Literals*)
-(*| bytestring { LBYT {Lexing.lexeme lexbuf} }*)
-| str_delimiter { DOUBLE_QUOTE }
-| str_content as s { LBYTESTRING (Lexing.lexeme lexbuf) }    (*Returns the complete matched re*)
-(* | c_delimiter { QUOTE }
-| c_content as s {  } *)
-| int as s { LWORD  ( int_of_string (Lexing.lexeme lexbuf)) }
+| '{' { LBRACE }
+| '}' { RBRACE }
+| '(' { LPAREN }
+| ')' { RPAREN }
 
-| [' ' '\t']+ { token lexbuf }
-| newline { token lexbuf }
+| ',' { COMMA }
+| ':' { COLON }
+| ';' { SEMICOLON }
 
-(*Data Type Token WE ARE JUST USING AT FIRST WORD AND BYTESTRING*)
-(* | "byte" { BYTE }
-| "ubyte" { UBYTE } *)
-| "word" { WORD }
-(* | "uword" { UWORD } *)
-| "bytestring" { BYTESTRING }
+| "->" { ARROW }
+| "</3" { BREAK }
 
-(*Binary Operators*)
+| "==" { EQ }
+| "!=" { NEQ }
+| "<=" { LEQ }
+| ">=" { GEQ }
+| "&&" { LAND }
+| "||" { LOR }
 | '+' { PLUS }
 | '-' { MINUS }
 | '*' { TIMES }
 | '/' { DIVIDE }
 | '%' { MOD }
-| "<<" { LSHIFT }
-| ">>" { RSHIFT }
 | '<' { LT }
 | '>' { GT }
-| "==" { EQ }
-| "!=" { NEQ }
-| "<=" { LEQ }
-| ">=" { GEQ }
-| "&&" { AND }
-| "||" { OR }
 
-| '=' { ASG }
-| ':' { COLON }
-| ';' { SEMICOLON }
-| '"' { DOUBLE_QUOTE }
-| '(' { LPAREN }
-| ')' { RPAREN }
-| '{' { LBRACE }
-| '}' { RBRACE }
-| ',' { COMMA }
+| "bool" { BOOL }
+| "word" { WORD }
+| "bytestring" { BYTESTRING }
+| "byte" { BYTE }
 
-(*Reserved Symbols*)
-| "til" { TYPE }
-| "fish" { FUNC }
 | "if" { IF }
 | "else" { ELSE }
+
+| "for" { FOR }
 | "while" { WHILE }
 | "do" { DO }
-| "for" { FOR }
-| "</3" { BREAK }
-| "->" { ARROW }
 
+| "fish" { FUNC }
+| "til" { LET }
+| '\'' { lit_byte lexbuf }
+| '"' { let buf = Buffer.create 16 in lit_bytestring buf lexbuf }
 
+| bool as b { LIT_BOOL (Bool.of_string b) }
+| int as i { LIT_WORD (Int.of_string i) }
 
+| id as ident { ID ident }
+
+| eof { EOF }
+
+| _ as c { raise (Error (Printf.sprintf "Unexpected char: ~c" c)) }
+
+and lit_byte = parse
+| [^ '\\' '\''] as c '\'' { LIT_BYTE c }
+| '\\' _ as c '\'' { LIT_BYTE (char_escape c) }
+| _ { raise (Error "Invalid byte literal") }
+
+and lit_bytestring buf = parse
+| '"' { LIT_BYTESTRING (Buffer.contents buf) }
+| '\\' _ as c { LIT_BYTE (char_escape c) }
+| [^ '"' '\\']+ as s {
+    Buffer.add_string buf s;
+    lit_bytestring buf s
+  }
+| eof { raise (Error "Unterminated string literal") }

@@ -1,110 +1,106 @@
-%{
-open Ast
-%}
-%token FUNCALL
-%token TIL (*til*)
-%token WORD BYTESTRING BOOL
-%token <string> LBYTESTRING
-%token <int64> LWORD
-%token <bool> LBOOL
-%token COLON SEMICOLON DOUBLE_QUOTE LPAREN RPAREN LBRACE RBRACE QUOTE COMMA
+%token TYP_BOOL TYP_WORD TYP_BYTE TYP_BYTESTRING
+
+%token <bool> LIT_BOOL
+%token <int64> LIT_WORD
+%token <char> LIT_BYTE
+%token <string> LIT_BYTESTRING
+
+%token <string> ID
+
 %token PLUS MINUS TIMES DIVIDE MOD
 %token EQ GT LT NEQ GEQ LEQ
-%token LSHIFT RSHIFT
-%token AND OR
-%token <string> ID
-%token ASG (*= ASSIGMENT*)
-%token EOF
-%token TYPE FUNC IF ELSE WHILE DO FOR BREAK ARROW
-%token PRINTSTR PRINTINT
+%token LAND LOR
 
-(*Associativity and Precedence*)
-%left OR
-%left AND
-%nonassoc EQ, NEQ (*== !=*)
-%left GT, LT, GEQ, LEQ
-
+%left TIMES DIVIDE MOD
 %left PLUS MINUS
-%right TIMES DIVIDE MOD
+%left LT LEQ GT GEQ
+%left EQ NEQ
+%left LAND
+%left LOR
 
-%start <Ast.program> progam
+%token ASSIGN
+
+%token COMMA
+
+%token COLON SEMICOLON
+
+%token ARROW
+
+%token LPAREN RPAREN
+%token LBRACE RBRACE
+
+%token DEFUN LET
+
+%token IF ELSE
+
+%token FOR WHILE DO BREAK
+
+%token EOF
+
+%start <Ast.program> root
 %%
 
-// Grammar rules, valid ways to writte my lang
-progam:
-| list(stmt) EOF {$1}
-| EOF {[]}
+let root := content = toplevel+ ; EOF ; { Array.of_list content}
 
-expr:
-| LBYTESTRING { Literal.ByteString $1 }
-| LWORD { Literal.Word $1 }
-| LBOOL { Literal.BOOL $1 }
-| expr operator expr { Operation($2, $1, $3) }
-| ID { Id $1 }
-| FUNCALL ID params { FunctionCall($2, $3) }
+let toplevel :=
+  | DEFUN ; id = ID ; args = funargs ; ARROW ; rettyp = typ ; (body, retval) = funbody ;
+    { Ast.FunDef { id; args = Array.of_list args; rettyp; body = Array.of_list body; retval } }
 
-stmt:
-| TIL ID COLON dtype
-| FUNC ID funparams bracedBody ARROW dtype { FunctionDef($2, $3) } //fish Die (mood: byte) -> bytestring {<body> <return-value>}
-| ID ASG expr { Assign($1, $3) }
-| IF params bracedBody iftail { If($2, $3, $4) }
-| BREAK { Break }
-| WHILE params loopBody { While($2, $3) }
-| DO loopBody WHILE params  { While($2, $3) }
-| PRINTINT LWORD { PrintWord (Literal.Word $2) }
-| PRINTSTR LBYTESTRING { PrintString (Literal.ByteString $2) }
+let funargs := delimited(LPAREN, separated_list(COMMA, funarg), RPAREN)
+let funarg := id = id ; COLON ; typ = typ ; <>
 
+let funbody := delimited(LBRACE, body = stmt* ; retval = expr? ; <>, RBRACE)
 
+let stmt :=
+  | LET ; id = id ; COLON ; typ = typ ; init = option(ASSIGN ; expr) ;
+    { Ast.VarDecl { id; typ; init } }
+  | x = id ; ASSIGN ; e = expr ; < Ast.Assign >
+  | IF ; cond = expr ; blk = delimited(LBRACE, stmt*, RBRACE) ; tail = option(ELSE ; stmt) ;
+    { Ast.If { cond; blk = Array.of_list blk ; tail } }
+  | e = expr ; SEMICOLON ; < Ast.Ignore >
+  | FOR ;
+    LPAREN ; init = expr ; SEMICOLON ; cond = expr ; SEMICOLON ; step = stmt ; RPAREN ;
+    body = delimited(LBRACE, stmt*, RBRACE) ;
+    { Ast.For { cond; init; step; body = Array.of_list body } }
+  | WHILE ; cond = expr ; body = delimited(LBRACE, stmt*, RBRACE) ;
+    { Ast.While (cond, Array.of_list body) }
+  | DO ; body = delimited(LBRACE, stmt*, RBRACE) ; WHILE ; cond = expr ; SEMICOLON ;
+    { Ast.DoWhile (cond, Array.of_list body) }
+  | BREAK ; SEMICOLON ; { Ast.Break }
 
-iftail:
-| ELSE bracedBody { $2 }
-| ELSE IF params bracedBody iftail { If($3, $4, $5) }
-| /* As empty as my memory */ { [] }
+let expr :=
+  | func = id ; args = delimited(LPAREN, expr*, RPAREN) ;
+    { Ast.Call (func, Array.of_list args) }
+  | lhs = expr ; op = binop ; rhs = expr ;
+    { Ast.BinOp (op, lhs, rhs) }
+  | l = literal ; < Ast.Literal >
+  | x = id ; < Ast.Variable >
 
+let binop :=
+  | PLUS ; { Ast.Plus }
+  | MINUS ; { Ast.Minus }
+  | TIMES ; { Ast.Times }
+  | DIVIDE ; { Ast.Divide }
+  | MOD ; { Ast.Mod }
+  | EQ ; { Ast.Eq }
+  | GT ; { Ast.GT }
+  | LT ; { Ast.LT }
+  | NEQ ; { Ast.NEq }
+  | GEQ ; { Ast.GEq }
+  | LEQ ; { Ast.LEq }
+  | LAND ; { Ast.LAnd }
+  | LOR ; { Ast.LOr }
 
-// WE might (MUST) re-writte this because we are missing expressions literals (or not anymore)
-param:
-| expr { $1 }
+let id := ID
 
-params:
-| separated_list(COMMA, param) { $1 }
+let literal :=
+  | l = LIT_BOOL ; < Literal.Bool >
+  | l = LIT_WORD ; < Literal.Word >
+  | l = LIT_BYTE ; < Literal.Byte >
+  | l = LIT_BYTESTRING ; < Literal.ByteString >
 
-funparam:
-| ID COLON dtype  { ($1, $2) }  // mood: byte
-
-funparams:
-| LPAREN separated_list(COMMA, funparam) RPAREN { $2 }
-
-body:
-| expr SEMICOLON { $1 }
-| stmt SEMICOLON { $1 }
-
-loopBody:
-| LBRACE body* RBRACE { $2 }
-
-bracedBody:
-| LBRACE body expr RBRACE { ($2, $3) }
-
-
-// auxiliar rules to identify "operators" inline doesn't generate a node
-%inline operator:
-| PLUS { Plus }
-| MINUS { Minus }
-| TIMES { Times }
-| DIVIDE { Divide }
-| MOD { Mod }
-| EQ { Eq }
-| GT { Gt }
-| LT { Lt }
-| NEQ { NEq }
-| GEQ { GEq }
-| LEQ { LEq }
-| AND { And }
-| OR { And }
-| LSHIFT { LShift }
-| RSHIFT { RShift }
-
-%inline dtype:
-| WORD { DType.Word }
-| BYTESTRING { DType.Bytestring }
-| BOOL { DType.Bool }
+let typ :=
+  | TYP_BOOL ; { Typ.Bool }
+  | TYP_WORD ; { Typ.Word }
+  | TYP_BYTE ; { Typ.Byte }
+  | TYP_BYTESTRING ; { Typ.ByteString }
