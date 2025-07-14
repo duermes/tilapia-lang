@@ -23,9 +23,18 @@ let op_instructions = function
   | LAnd     -> "\tand rax, rbx\n"
   | LOr      -> "\tor rax, rbx\n"
 
-
 let codegenx86_print _ =
-  ""
+  "\tmov rax, 1\n \tmov rdi, 1"
+  |> add_string code
+
+let print_string n =
+  "\tmov rsi, "^ n ^ "\n\tmov rdx, " ^ n ^ "_len\n\tsyscall\n"
+  |> add_string code
+
+(*Numbers are printed during assembly*)
+let print_word n = 
+  "\t print \" \", "^ n ^ "\n"
+  |> add_string code
 
 (*constant build*)
 let asm_word name n =
@@ -38,8 +47,26 @@ let asm_bool name n =
   |> add_string code
 
 let asm_bytestring name n =
-  "\t" ^ name ^ ": dq " ^ n ^ "\n"
+  "\t" ^ name ^ ": db " ^ n ^ ", 10\n" 
+  ^ "\t"^ name ^"_len = $ -" ^ n
+  |> add_string code
 
+(*Push to rax var to use*)
+let asm_push_var name =
+"\tmov rax, [" ^ name ^ "]\n\tpush rax\n"
+|> add_string code
+let asm_op op =
+  "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
+  |> add_string code
+
+let asm_fundef n = "code"
+let codegenx86_main exp = asm_fundef "main"
+let rec codegenx86_prog = function
+  | []                              -> failwith "Codegenx86 requires a 'main' function."
+  | FunDef {("main", args, body)}::ys -> codegenx86_main body
+  | FunDef (name, args, body)::ys   ->
+    codegenx86_func name args body;
+    codegenx86_prog ys
 
 let asm_binop op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
