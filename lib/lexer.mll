@@ -44,6 +44,11 @@ rule token = parse
 | "if" { IF }
 | "else" { ELSE }
 
+| "for" { FOR }
+| "while" { WHILE }
+| "do" { DO }
+| "</3" { BREAK }
+
 | "fish" { FUNC }
 | "til" { LET }
 
