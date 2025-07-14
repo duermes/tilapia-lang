@@ -1,8 +1,6 @@
 {
 open Lexing
 open Parser
-<<<<<<< HEAD
-=======
 
 exception Error of string
 
@@ -12,7 +10,6 @@ let char_escape = function
   | 'r' -> '\r'
   | 't' -> '\t'
   | c -> c
->>>>>>> 9005f496f96e3b1f978829932c86af07d13f5852
 }
 
 let bool = "true" | "false"
@@ -23,11 +20,7 @@ let int = '-'? uint
 let id = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
 rule token = parse
-<<<<<<< HEAD
-| '{' { LBRACE}
-=======
 | '{' { LBRACE }
->>>>>>> 9005f496f96e3b1f978829932c86af07d13f5852
 | '}' { RBRACE }
 | '(' { LPAREN }
 | ')' { RPAREN }
@@ -37,10 +30,7 @@ rule token = parse
 | ';' { SEMICOLON }
 
 | "->" { ARROW }
-<<<<<<< HEAD
-=======
 | "</3" { BREAK }
->>>>>>> 9005f496f96e3b1f978829932c86af07d13f5852
 
 | "==" { EQ }
 | "!=" { NEQ }
