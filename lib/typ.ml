@@ -1,0 +1,1 @@
+type t = Bool | Word | Byte | ByteString
