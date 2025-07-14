@@ -33,6 +33,8 @@
 
 %token IF ELSE
 
+%token FOR WHILE DO
+
 %token EOF
 
 %start <Ast.program> root
@@ -56,6 +58,15 @@ let stmt :=
   | IF ; cond = expr ; blk = delimited(LBRACE, stmt*, RBRACE) ; tail = option(ELSE ; stmt) ;
     { Ast.If { cond; blk = Array.of_list blk ; tail } }
   | e = expr ; SEMICOLON ; < Ast.Ignore >
+  | FOR ;
+    LPAREN ; init = expr ; SEMICOLON ; cond = expr ; SEMICOLON ; step = stmt ; RPAREN ;
+    delimited(LBRACE, stmt*, RBRACE) ;
+    { Ast.For { cond; init; step; body } }
+  | WHILE ; cond = expr ; body = delimited(LBRACE, stmt*, RBRACE) ;
+    { Ast.While (cond, Array.of_list body) }
+  | DO ; body = delimited(LBRACE, stmt*, RBRACE) ; WHILE ; cond = expr ; SEMICOLON ;
+    { Ast.DoWhile (cond, Array.of_list body) }
+  | BREAK ; SEMICOLON ; { Ast.Break }
 
 let expr :=
   | func = id ; args = delimited(LPAREN, expr*, RPAREN) ;

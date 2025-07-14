@@ -26,6 +26,10 @@ type stmt =
   | Assign of id * expr
   | If of { cond : expr; blk : stmt array; tail : stmt option }
   | Ignore of expr
+  | For of { cond : expr; init : expr; step : stmt; body : stmt array }
+  | While of expr * stmt array
+  | DoWhile of expr * stmt array
+  | Break
 
 type fun_arg = id * Typ.t
 
