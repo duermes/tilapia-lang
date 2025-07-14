@@ -3,6 +3,7 @@ entry main
 
 segment readable writeable
 buffer db 21 dup 0
+nombre: db "Hola", 0
 
 segment readable executable
 main:

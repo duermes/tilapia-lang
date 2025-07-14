@@ -1,4 +1,4 @@
-format ELF64 executable 3  ; valid exec for Linux x86_64
+format ELF64 ; valid exec for Linux x86_64
 entry main
 
 segment readable executable
