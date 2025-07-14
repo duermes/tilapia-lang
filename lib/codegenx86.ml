@@ -63,14 +63,18 @@ let asm_op op =
 
 
 
-
+let rec codegenx86_stmt stmt =
+  match stmt with
+  | Ignore (Literal (Word n)) ->
+      add_string code ("\tmov rax, " ^ Int64.to_string n ^ "\n")
+  | _ -> ()
 let codegenx86_expr expr =
 match expr with
 | Literal (Word n) ->
     add_string code ("\tmov rax, " ^ Int64.to_string n ^ "\n")
 | _ -> () 
 
-
+let codegenx86_args args = ()
 let codegenx86_func (FunDef { id; args; body; retval; _ }) =
   add_string code ("; funcion: " ^ id ^ "\n");
   codegenx86_args args;
