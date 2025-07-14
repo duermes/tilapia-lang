@@ -29,11 +29,11 @@
 
 <var-decl> := til <id> : <type> <var-init> ;
 
-<assign> := <id> = <expr> ;
+<assign> := <id> <expr> ;
 ```
 
 Example:
-```til name : bytestring = "Hassan";```
+```til name : bytestring "Hassan";```
 
 ## 2.3 Binary Operators
 
