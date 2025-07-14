@@ -25,15 +25,21 @@ let op_instructions = function
   | LOr      -> "\tor rax, rbx\n"
 
 
+let codegenx86_print _ =
+  ""
 
-let asm_word n =
-  " \tdb " ^ n ^ ", 0\n"
+(*constant build*)
+let asm_word name n =
+  "\t" ^ name ^ ": dq " ^ n ^ "\n"
   |> add_string code
 
-let asm_bool b =
-  let v = if b then "1" else "0" in
-  "    mov rax, " ^ v ^ "\n    push rax\n"
+let asm_bool name n =
+  let v = if n then "1" else "0" in
+  "\t"^ name ^ ": dq " ^ v ^ "\n"
   |> add_string code
+
+let asm_bytestring name n =
+  "\t" ^ name ^ ": dq " ^ n ^ "\n"
 
 
 let asm_binop op =
@@ -43,30 +49,13 @@ let asm_binop op =
   "    push rax\n"
   |> add_string code
 
-let asm_load_var name n =
-  name ^ ": dq " ^ (Int64.to_string n) ^ "\n"
-  |> add_string code
 
-let asm_print_rax =
-  "    ; Aquí pondrías la rutina para convertir rax a string y llamar a syscall write\n"
-  |> add_string code
-
-
-
-let asm_fundef n = "code"
-
-let codegenx86_main exp =
-  asm_fundef "main"
-
-let rec codegenx86 = function
-| [] -> None
-(* | FunDef{id="main"; args; rettyp; body; retval} -> codegenx86_main body *)
 
 let compile prog =
   reset code;
   add_string code codegen_prefix;
   add_string code codegen_main;
-  (* codegenx86 prog; *)
+
   add_string code codegen_suffix;
   output_buffer stdout code;
   "" 

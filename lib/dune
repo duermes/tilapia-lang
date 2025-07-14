@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-(include_subdirs unqualified)
-
-; (menhir
-;  (modules parser))
-
-; (ocamllex lexer)
-
-(library
- (name tilapia)
- (modules ast codegenx86 template)
-)
-=======
 (menhir
  (modules parser))
 
@@ -19,4 +6,3 @@
 (library
  (name tilapia)
  (modules ast lexer parser typ literal codegenx86 template))
->>>>>>> main
