@@ -1,5 +1,4 @@
 {
-open Lexing
 open Parser
 
 exception Error of string
@@ -70,18 +69,18 @@ rule token = parse
 
 | eof { EOF }
 
-| _ as c { raise (Error (Printf.sprintf "Unexpected char: ~c" c)) }
+| _ as c { raise (Error (Printf.sprintf "Unexpected char: %c" c)) }
 
 and lit_byte = parse
 | [^ '\\' '\''] as c '\'' { LIT_BYTE c }
-| '\\' _ as c '\'' { LIT_BYTE (char_escape c) }
+| '\\' (_ as c) '\'' { LIT_BYTE (char_escape c) }
 | _ { raise (Error "Invalid byte literal") }
 
 and lit_bytestring buf = parse
 | '"' { LIT_BYTESTRING (Buffer.contents buf) }
-| '\\' _ as c { LIT_BYTE (char_escape c) }
+| '\\' (_ as c) { LIT_BYTE (char_escape c) }
 | [^ '"' '\\']+ as s {
     Buffer.add_string buf s;
-    lit_bytestring buf s
+    lit_bytestring buf lexbuf
   }
 | eof { raise (Error "Unterminated string literal") }
