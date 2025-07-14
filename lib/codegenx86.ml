@@ -25,7 +25,7 @@ let op_instructions = function
   | LOr      -> "\tor rax, rbx\n"
 
 
-(* 
+
 let asm_word n =
   " \tdb " ^ n ^ ", 0\n"
   |> add_string code
@@ -47,25 +47,26 @@ let asm_load_var name n =
   name ^ ": dq " ^ (Int64.to_string n) ^ "\n"
   |> add_string code
 
-(* --- Print integer (básico, debes adaptar la rutina completa para convertir e imprimir) --- *)
 let asm_print_rax =
   "    ; Aquí pondrías la rutina para convertir rax a string y llamar a syscall write\n"
   |> add_string code
 
-(* --- Compile main program --- *)
-let compile stmts =
+
+
+let asm_fundef n = "code"
+
+let codegenx86_main exp =
+  asm_fundef "main"
+
+let rec codegenx86 = function
+| [] -> None
+(* | FunDef{id="main"; args; rettyp; body; retval} -> codegenx86_main body *)
+
+let compile prog =
   reset code;
   add_string code codegen_prefix;
   add_string code codegen_main;
-  List.iter (function
-    | Expr (Operation (op, e1, e2)) ->
-        (* Aquí deberías recorrer e1 y e2 recursivamente y después asm_binop op *)
-        ()
-    | PrintWord (Literal.Word n) ->
-        asm_word n;
-        asm_print_rax
-    | _ -> ()
-  ) stmts;
+  (* codegenx86 prog; *)
   add_string code codegen_suffix;
   output_buffer stdout code;
-  "" *)
+  "" 
