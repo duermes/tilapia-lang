@@ -53,11 +53,13 @@ let asm_bytestring name n =
   |> add_string code
 
 
-let asm_binop op =
+(*Push to rax var to use*)
+let asm_push_var name =
+"\tmov rax, [" ^ name ^ "]\n\tpush rax\n"
+|> add_string code
+let asm_op op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
   |> add_string code
-let asm_load_var name n =
-  name ^ ": dq " ^ Int64.to_string n ^ "\n" |> add_string code
 
 let asm_fundef n = "code"
 let codegenx86_main exp = asm_fundef "main"

@@ -19,6 +19,8 @@ msg: db 'hi', 10
 num: dq 4
 buffer rb 20       ; Buffer para la conversión a string
 newline db 10 
+a: dq 5
+b: dq 3
 
 msg_len = $ - msg; 
 
@@ -28,14 +30,26 @@ segment readable executable ; defines a segment that is readable and executable
 entry main   ; entry point of the program
 
 main:
-    print " ", 12
-    mov     rax, 1
-    mov     rdi, 1       ; file descriptor for stdout
-    mov     rsi, msg
-    mov     rdx, msg_len
+    mov rax, [a]
+    push rax
+    mov rax, [b]
+    push rax
+    pop rbx
+    pop rax
+    add rax, rbx
+    push rax
+    
+    mov rdi, rax
+    mov     rax, 60        ; syscall exit   
     syscall
 
-    mov     rax, 60        ; syscall exit
-    xor     rdi, rdi       
-    syscall
+    ; mov     rax, 1
+    ; mov     rdi, 1       ; file descriptor for stdout
+    ; mov     rsi, msg
+    ; mov     rdx, msg_len
+    ; syscall
+
+    ; mov     rax, 60        ; syscall exit
+    ; xor     rdi, rdi       
+    ; syscall
 
