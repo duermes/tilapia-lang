@@ -47,6 +47,8 @@ rule token = parse
 | '<' { LT }
 | '>' { GT }
 
+| '=' { ASSIGN }
+
 | "bool" { TYP_BOOL }
 | "word" { TYP_WORD }
 | "byte" { TYP_BYTE }
