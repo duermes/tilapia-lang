@@ -5,4 +5,4 @@
 
 (library
  (name tilapia)
- (modules ast lexer parser typ literal codegenx86 template))
+ (modules ast lexer parser typ literal printer codegenx86 template))

@@ -21,7 +21,6 @@ let op_instructions = function
   | LAnd     -> "\tand rax, rbx\n"
   | LOr      -> "\tor rax, rbx\n"
 
-
 let codegenx86_print _ =
   "\tmov rax, 1\n \tmov rdi, 1"
   |> add_string code
@@ -50,7 +49,6 @@ let asm_bytestring name n =
   ^ "\t"^ name ^"_len = $ -" ^ n
   |> add_string data_declr
 
-
 (*Push to rax var to use*)
 let asm_push_var name =
 "\tmov rax, [" ^ name ^ "]\n\tpush rax\n"
@@ -59,8 +57,23 @@ let asm_op op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
   |> add_string code
 
+<<<<<<< HEAD
+=======
+let asm_fundef n = "code"
+let codegenx86_main exp = asm_fundef "main"
+let rec codegenx86_prog = function
+  | []                              -> failwith "Codegenx86 requires a 'main' function."
+  | FunDef {("main", args, body)}::ys -> codegenx86_main body
+  | FunDef (name, args, body)::ys   ->
+    codegenx86_func name args body;
+    codegenx86_prog ys
+>>>>>>> 3ae93a159f6d2f26febedc26bd39e609bcdf2543
 
+let asm_binop op =
+  "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
+  |> add_string code
 
+<<<<<<< HEAD
 
 
 let rec codegenx86_stmt stmt =
@@ -96,11 +109,17 @@ let codegenx86_prog prog =
     failwith "Codegenx86 requires a 'main' function."
 
 let compile prog =
+=======
+let compile _prog =
+>>>>>>> 3ae93a159f6d2f26febedc26bd39e609bcdf2543
   reset code;
   reset data_declr;
   add_string code codegen_prefix;
   output_buffer stdout data_declr;
   add_string code codegen_main;
+<<<<<<< HEAD
   codegenx86_prog prog;
+=======
+>>>>>>> 3ae93a159f6d2f26febedc26bd39e609bcdf2543
   add_string code codegen_suffix;
   output_buffer stdout code

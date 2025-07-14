@@ -15,6 +15,21 @@ type binop =
   | LAnd
   | LOr
 
+let string_of_binop = function
+  | Plus -> "+"
+  | Minus -> "-"
+  | Times -> "*"
+  | Divide -> "/"
+  | Mod -> "%"
+  | Eq -> "=="
+  | GT -> ">"
+  | LT -> "<"
+  | NEq -> "!="
+  | GEq -> ">="
+  | LEq -> "<="
+  | LAnd -> "&&"
+  | LOr -> "||"
+
 type expr =
   | Literal of Literal.t
   | Variable of id
