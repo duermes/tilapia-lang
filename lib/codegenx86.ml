@@ -45,11 +45,9 @@ let asm_binop op =
   "    pop rbx\n" ^ "    pop rax\n" ^ op_instructions op ^ "    push rax\n"
   |> add_string code
 
-let compile prog =
+let compile _prog =
   reset code;
   add_string code codegen_prefix;
   add_string code codegen_main;
-  prog
   add_string code codegen_suffix;
-  output_buffer stdout code;
-  ""
+  output_buffer stdout code
