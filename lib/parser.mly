@@ -33,7 +33,7 @@
 
 %token IF ELSE
 
-%token FOR WHILE DO
+%token FOR WHILE DO BREAK
 
 %token EOF
 
@@ -60,8 +60,8 @@ let stmt :=
   | e = expr ; SEMICOLON ; < Ast.Ignore >
   | FOR ;
     LPAREN ; init = expr ; SEMICOLON ; cond = expr ; SEMICOLON ; step = stmt ; RPAREN ;
-    delimited(LBRACE, stmt*, RBRACE) ;
-    { Ast.For { cond; init; step; body } }
+    body = delimited(LBRACE, stmt*, RBRACE) ;
+    { Ast.For { cond; init; step; body = Array.of_list body } }
   | WHILE ; cond = expr ; body = delimited(LBRACE, stmt*, RBRACE) ;
     { Ast.While (cond, Array.of_list body) }
   | DO ; body = delimited(LBRACE, stmt*, RBRACE) ; WHILE ; cond = expr ; SEMICOLON ;
