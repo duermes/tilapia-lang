@@ -4,14 +4,5 @@
 (ocamllex lexer)
 
 (library
-  (name tilapia)
-  (modules
-    ast
-    codegenx86
-    driver
-    lexer
-    literal
-    parser
-    printer
-    template
-    typ))
+ (name tilapia)
+ (modules ast codegenx86 driver lexer literal parser printer template typ))

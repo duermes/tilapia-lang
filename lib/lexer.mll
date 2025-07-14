@@ -1,7 +1,7 @@
 {
 open Parser
 
-exception Error of string
+exception LexError of string
 
 let char_escape = function
   | 'b' -> '\b'
@@ -71,12 +71,12 @@ rule token = parse
 
 | eof { EOF }
 
-| _ as c { raise (Error (Printf.sprintf "Unexpected char: %c" c)) }
+| _ as c { raise (LexError (Printf.sprintf "Unexpected char: %c" c)) }
 
 and lit_byte = parse
 | [^ '\\' '\''] as c '\'' { LIT_BYTE c }
 | '\\' (_ as c) '\'' { LIT_BYTE (char_escape c) }
-| _ { raise (Error "Invalid byte literal") }
+| _ { raise (LexError "Invalid byte literal") }
 
 and lit_bytestring buf = parse
 | '"' { LIT_BYTESTRING (Buffer.contents buf) }
@@ -85,4 +85,4 @@ and lit_bytestring buf = parse
     Buffer.add_string buf s;
     lit_bytestring buf lexbuf
   }
-| eof { raise (Error "Unterminated string literal") }
+| eof { raise (LexError "Unterminated string literal") }

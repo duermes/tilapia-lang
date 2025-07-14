@@ -23,6 +23,6 @@ let () =
         open_in (Option.get !infile)
         |> Lexing.from_channel |> Driver.parse_or_error
       with
-      | Error msg -> Printf.printf "Failed to parse with error: %s" msg
+      | Error msg -> Printf.printf "Failed to parse with error: %s" msg; exit 1
       | Ok ast -> Printer.print_program ast |> print_string)
   | _ -> assert false

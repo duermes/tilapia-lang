@@ -1,2 +1,3 @@
 let parse_or_error lexbuf =
-  Parser.root Lexer.token lexbuf |> Result.ok
+  try Parser.root Lexer.token lexbuf |> Result.ok
+  with Lexer.LexError msg -> "Lexer error: " ^ msg |> Result.error
