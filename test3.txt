@@ -1,0 +1,10 @@
+fish main(one: bytestring) -> bytestring {
+  til hola: bool = true
+  hola = false
+  hola;
+  til text: bytestring
+  text = "Hola"
+  til test: byte
+  test = 'A'
+  test;
+}

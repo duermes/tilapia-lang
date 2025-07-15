@@ -1,0 +1,12 @@
+fish main(one: word) -> word {
+  til hola: bool = true
+  hola = false
+  hola;
+  til text: bytestring
+  text = "Hola"
+  til test: byte
+  test = 'A'
+  1;
+  2+3;
+  til suma: word = 20+5;
+}

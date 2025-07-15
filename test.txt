@@ -1,6 +1,3 @@
 fish main() -> word {
-  til a: word = 5;
-  til b: word = 10;
-
-1
+  
 }
